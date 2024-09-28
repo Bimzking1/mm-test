@@ -58,17 +58,14 @@ export default function Home() {
               />
             </div>
         }
-        {
-          product?.items?.length > 0 &&
-            <ListProduct
-              data={product?.items}
-              showModalConfirmDelete={showModalConfirmDelete}
-              setShowModalConfirmDelete={setShowModalConfirmDelete}
-              showModalEditProduct={showModalEditProduct}
-              setShowModalEditProduct={setShowModalEditProduct}
-              setEditedProduct={setEditedProduct}
-            />
-        }
+        <ListProduct
+          data={product?.items}
+          showModalConfirmDelete={showModalConfirmDelete}
+          setShowModalConfirmDelete={setShowModalConfirmDelete}
+          showModalEditProduct={showModalEditProduct}
+          setShowModalEditProduct={setShowModalEditProduct}
+          setEditedProduct={setEditedProduct}
+        />
       </div>
 
       <Footer/>

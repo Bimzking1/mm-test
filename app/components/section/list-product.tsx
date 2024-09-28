@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from "next/image";
 import Box from '@/public/box.png'
 import { standartCurrency } from '@/app/hooks/useStandardCurrency';
@@ -6,6 +6,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaRegEdit } from "react-icons/fa";
 import ModalConfirmDelete from './modal-confirm-delete';
 import { ItemsI } from '@/app/redux/slices/productSlice';
+import { useDispatch } from 'react-redux';
 
 interface ListProductProps {
   data: ItemsI[];
@@ -30,15 +31,19 @@ const ListProduct: React.FC<ListProductProps> = ({
   const [filteredProduct, setFilteredProduct] = useState(data);
 
   const filterBySearch = (event: any) => {
-      const query = event.target.value;
-      var updatedList = [...data];
-      updatedList = updatedList.filter((item) => {
-          return (
-              item.name.toLowerCase().indexOf(query.toLowerCase()) !== -1
-          );
-      });
-      setFilteredProduct(updatedList);
+    const query = event.target.value;
+    var updatedList = [...data];
+    updatedList = updatedList.filter((item) => {
+      return (
+          item.name.toLowerCase().indexOf(query.toLowerCase()) !== -1
+      );
+    });
+    setFilteredProduct(updatedList);
   };
+
+  useEffect(() => {
+    setFilteredProduct(data)
+  }, [data])
   
   return (
     <div className='h-full w-full xl:w-[1280px] flex flex-col justify-center items-center'>
@@ -46,12 +51,14 @@ const ListProduct: React.FC<ListProductProps> = ({
         <div className='text-lg font-semibold mb-2'>
           Search Product
         </div>
-        <input
-          type="text"
-          onChange={filterBySearch}
-          placeholder="Search product ..."
-          className="w-full rounded-lg border border-[#494949] bg-transparent py-2 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-        />
+        <div className='flex justify-center items-center gap-2 w-full'>
+          <input
+            type="text"
+            onChange={filterBySearch}
+            placeholder="Search product ..."
+            className="w-full rounded-lg border border-[#494949] bg-transparent py-2 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+          />
+        </div>
       </div>
       {
         filteredProduct?.length === 0 &&
