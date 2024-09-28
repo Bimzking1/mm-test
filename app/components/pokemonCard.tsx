@@ -28,7 +28,6 @@ const pokemonCard = (props: Props) => {
     
         axios.request(config)
         .then((response) => {
-            // console.log('res child: ', response)
             setHeight(response.data.height)
             setExperience(response.data.base_experience)
     

@@ -30,11 +30,15 @@ const productSlice = createSlice({
       const { name, price, stock } = action.payload;
       state.items.push({ id: nanoid(), name, price, stock });
     },
+    editProduct: (state, action) => {
+      const index = state.items.findIndex((item) => item.id === action.payload.id);
+      state.items[index] = action.payload;
+    },
     deleteProduct: (state, action) => {
       state.items = state.items.filter((item) => item.id !== action.payload);
     }
   }
 });
 
-export const { addProduct, deleteProduct } = productSlice.actions;
+export const { addProduct, editProduct, deleteProduct } = productSlice.actions;
 export default productSlice.reducer;

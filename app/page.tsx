@@ -11,6 +11,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ModalAddProduct from "./components/section/modal-add-product";
 import ListProduct from "./components/section/list-product";
+import ModalEditProduct from "./components/section/modal-edit-product";
 
 export default function Home() {
 
@@ -19,7 +20,9 @@ export default function Home() {
   const users = useSelector((state: any) => state.users);
   const product = useSelector((state: any) => state.product);
 
+  const [editedProduct, setEditedProduct] = useState<number>(0)
   const [showModalAddProduct, setShowModalAddProduct] = useState<boolean>(false)
+  const [showModalEditProduct, setShowModalEditProduct] = useState<boolean>(false)
   const [showModalConfirmDelete, setShowModalConfirmDelete] = useState<boolean>(false)
 
   return (
@@ -46,11 +49,24 @@ export default function Home() {
             </div>
         }
         {
+          showModalEditProduct &&
+            <div className="absolute left-0 right-0 m-auto">
+              <ModalEditProduct
+                data={product?.items}
+                editedProduct={editedProduct}
+                onClose={() => setShowModalEditProduct(false)}
+              />
+            </div>
+        }
+        {
           product?.items?.length > 0 &&
             <ListProduct
               data={product?.items}
               showModalConfirmDelete={showModalConfirmDelete}
               setShowModalConfirmDelete={setShowModalConfirmDelete}
+              showModalEditProduct={showModalEditProduct}
+              setShowModalEditProduct={setShowModalEditProduct}
+              setEditedProduct={setEditedProduct}
             />
         }
       </div>
